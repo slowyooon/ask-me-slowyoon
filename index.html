@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
-
   <style>
     :root {
       --sage-deep:    #6B8F6E;
@@ -23,11 +21,8 @@
       --ink-muted:    #9C9590;
       --white:        #FEFCF9;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Gowun Batang', 'Georgia', serif;
       background-color: var(--beige-bg);
@@ -41,8 +36,6 @@
       position: relative;
       overflow-x: hidden;
     }
-
-    /* subtle grain texture */
     body::before {
       content: '';
       position: fixed;
@@ -51,8 +44,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
-    /* decorative top circle */
     body::after {
       content: '';
       position: fixed;
@@ -66,7 +57,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
     .wrapper {
       position: relative;
       z-index: 1;
@@ -74,18 +64,11 @@
       max-width: 560px;
       animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-
     @keyframes rise {
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* ── header ── */
-    .header {
-      text-align: center;
-      margin-bottom: 52px;
-    }
-
+    .header { text-align: center; margin-bottom: 52px; }
     .header-eyebrow {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 12px;
@@ -94,7 +77,6 @@
       color: var(--sage-deep);
       margin-bottom: 20px;
     }
-
     .header-mark {
       display: inline-block;
       width: 32px;
@@ -103,7 +85,6 @@
       vertical-align: middle;
       margin: 0 10px;
     }
-
     .header-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(24px, 5.6vw, 36px);
@@ -114,21 +95,17 @@
       letter-spacing: -0.01em;
       margin-bottom: 22px;
     }
-
     .header-title strong {
       font-weight: 400;
       font-style: normal;
       color: var(--sage-deep);
     }
-
     .header-desc {
       font-size: 14.5px;
       line-height: 1.85;
       color: var(--ink-soft);
       word-break: keep-all;
     }
-
-    /* ── card ── */
     .card {
       background: var(--white);
       border-radius: 20px;
@@ -138,11 +115,9 @@
         0 12px 40px rgba(160, 140, 110, 0.12),
         inset 0 0 0 1px rgba(160, 140, 110, 0.10);
     }
-
     @media (max-width: 480px) {
       .card { padding: 32px 24px 36px; }
     }
-
     .card-label {
       font-size: 11.5px;
       letter-spacing: 0.18em;
@@ -151,7 +126,6 @@
       margin-bottom: 14px;
       display: block;
     }
-
     .nickname-field {
       width: 100%;
       border: none;
@@ -165,10 +139,8 @@
       transition: border-color 0.25s;
       margin-bottom: 36px;
     }
-
     .nickname-field::placeholder { color: var(--ink-muted); }
     .nickname-field:focus { border-color: var(--sage-deep); }
-
     .hint-block {
       background: #EBF2EA;
       border-left: 3px solid var(--sage-mid);
@@ -176,19 +148,16 @@
       padding: 18px 20px;
       margin-bottom: 20px;
     }
-
     .hint-lead {
       font-size: 13.5px;
       line-height: 1.85;
       color: var(--ink-soft);
       margin-bottom: 12px;
     }
-
     .hint-list {
       list-style: none;
       margin-bottom: 12px;
     }
-
     .hint-list li {
       font-size: 13px;
       color: var(--ink-soft);
@@ -196,7 +165,6 @@
       padding-left: 14px;
       position: relative;
     }
-
     .hint-list li::before {
       content: '·';
       position: absolute;
@@ -205,13 +173,11 @@
       font-size: 16px;
       line-height: 1.4;
     }
-
     .hint-tail {
       font-size: 13.5px;
       line-height: 1.85;
       color: var(--ink-soft);
     }
-
     .question-area {
       width: 100%;
       border: 1.5px solid var(--beige-mid);
@@ -227,14 +193,11 @@
       transition: border-color 0.25s, background 0.25s;
       min-height: 140px;
     }
-
     .question-area::placeholder { color: var(--ink-muted); }
-
     .question-area:focus {
       border-color: var(--sage-deep);
       background: var(--white);
     }
-
     .char-count {
       text-align: right;
       font-size: 11px;
@@ -244,7 +207,6 @@
       font-family: 'Cormorant Garamond', serif;
       letter-spacing: 0.05em;
     }
-
     .submit-btn {
       width: 100%;
       padding: 16px;
@@ -260,34 +222,16 @@
       overflow: hidden;
       transition: background 0.25s, transform 0.15s;
     }
-
-    .submit-btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: white;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
     .submit-btn:hover { background: #5a7d5d; transform: translateY(-1px); }
     .submit-btn:active { transform: translateY(0); }
     .submit-btn:disabled { background: var(--sage-light); color: var(--ink-muted); cursor: not-allowed; transform: none; }
-
-    /* ── success ── */
     .success {
       display: none;
       text-align: center;
       padding: 8px 0;
       animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-
-    .success-icon {
-      font-size: 36px;
-      margin-bottom: 20px;
-      display: block;
-    }
-
+    .success-icon { font-size: 36px; margin-bottom: 20px; display: block; }
     .success-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 28px;
@@ -296,13 +240,7 @@
       color: var(--sage-deep);
       margin-bottom: 14px;
     }
-
-    .success-desc {
-      font-size: 14.5px;
-      color: var(--ink-soft);
-      line-height: 1.85;
-    }
-
+    .success-desc { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; }
     .footer {
       text-align: center;
       margin-top: 40px;
@@ -311,7 +249,6 @@
       color: var(--ink-muted);
       letter-spacing: 0.1em;
     }
-
     .footer-label {
       font-size: 11px;
       letter-spacing: 0.15em;
@@ -319,14 +256,12 @@
       color: var(--ink-muted);
       margin-bottom: 10px;
     }
-
     .footer-links {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
     }
-
     .footer-link {
       display: inline-flex;
       align-items: center;
@@ -341,18 +276,8 @@
       border-radius: 20px;
       transition: background 0.2s, color 0.2s;
     }
-
-    .footer-link:hover {
-      background: var(--sage-light);
-      color: var(--ink);
-    }
-
-    .footer-dot {
-      color: var(--ink-muted);
-      font-size: 14px;
-    }
-
-    /* ── decorative bottom leaf ── */
+    .footer-link:hover { background: var(--sage-light); color: var(--ink); }
+    .footer-dot { color: var(--ink-muted); font-size: 14px; }
     .leaf {
       position: fixed;
       bottom: -60px;
@@ -369,7 +294,6 @@
 </head>
 <body>
   <div class="leaf"></div>
-
   <div class="wrapper">
     <header class="header">
       <p class="header-eyebrow">
@@ -386,30 +310,14 @@
         듣고 싶은 이야기가 있다면 편하게 질문해주세요. 뭐든 좋아요!
       </p>
     </header>
-
     <div class="card">
       <div id="form-view">
-        <!-- ⚠️ 설정 방법:
-             1. https://formspree.io 에서 무료 계정 생성
-             2. 새 폼 만들고 엔드포인트 URL 복사
-             3. 아래 action="" 에 붙여넣기
-             예: action="https://formspree.io/f/xyzabcde"
-        -->
         <form id="ask-form" action="https://script.google.com/macros/s/AKfycbwRpMHMM1IfseSLmDaZzZP9X1NwXWuQPqqK-TvFljZil8BaDXSE_5Cc-ABt1Zi_q_Fi/exec" method="POST">
           <label class="card-label" for="nickname">닉네임 (선택)</label>
-          <input
-            id="nickname"
-            class="nickname-field"
-            type="text"
-            name="nickname"
-            placeholder="익명으로 보내도 괜찮아요"
-            autocomplete="off"
-          />
-
+          <input id="nickname" class="nickname-field" type="text" name="nickname" placeholder="익명으로 보내도 괜찮아요" autocomplete="off" />
           <label class="card-label" for="question">하고 싶은 말 또는 질문</label>
           <div class="hint-block">
-            <p class="hint-lead">요즘 SNS 콘텐츠 기획하면서, 여러분이 진짜 궁금해하는 것들을 담아보려고 해요.<br>
-            "나 사실 이런 건 좀 궁금했음…" 하는 거 있나요?</p>
+            <p class="hint-lead">요즘 SNS 콘텐츠 기획하고 있는데, <br> 여러분이 진짜 궁금해하는 것들을 담아볼까해요.<br>"나 사실 이런 건 좀 궁금했음…" 하는 거 있나요?</p>
             <ul class="hint-list">
               <li>어떻게 이 일 시작하게 됐는지</li>
               <li>요즘 제 하루 루틴이 어떤지</li>
@@ -418,30 +326,17 @@
             </ul>
             <p class="hint-tail">평소에 궁금했던 게 있다면 편하게 남겨주세요 😃<br>뭐든 좋아요. 하나씩 콘텐츠로 풀어서 이야기해볼게요.</p>
           </div>
-          <textarea
-            id="question"
-            class="question-area"
-            name="question"
-            placeholder="여기에 자유롭게 적어주세요."
-            maxlength="800"
-            required
-          ></textarea>
+          <textarea id="question" class="question-area" name="question" placeholder="여기에 자유롭게 적어주세요." maxlength="800" required></textarea>
           <p class="char-count"><span id="count">0</span> / 800</p>
-
           <button type="submit" class="submit-btn" id="submit-btn">보내기</button>
         </form>
       </div>
-
       <div class="success" id="success-view">
         <span class="success-icon">🌿</span>
-        <p class="success-title">잘 받았어요.</p>
-        <p class="success-desc">
-          보내준 말, 꼭 읽을게요.<br>
-          언젠가 콘텐츠로 돌아올 거예요.
-        </p>
+        <p class="success-title">잘 받았어요. 고마워요 :)</p>
+        <p class="success-desc">언젠가 콘텐츠로 돌아올게요!</p>
       </div>
     </div>
-
     <footer class="footer">
       <p class="footer-label">인스타그램에서 만나요</p>
       <div class="footer-links">
@@ -457,7 +352,6 @@
       </div>
     </footer>
   </div>
-
   <script>
     const textarea = document.getElementById('question');
     const countEl  = document.getElementById('count');
@@ -465,32 +359,47 @@
     const btn      = document.getElementById('submit-btn');
 
     textarea.addEventListener('input', () => {
-      countEl.textContent = textarea.value.length;    });
+      countEl.textContent = textarea.value.length;
+    });
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       btn.disabled = true;
       btn.textContent = '전송 중…';
 
-      const data = {
-        question: document.getElementById('question').value,
-        nickname: document.getElementById('nickname').value || '익명'
+      const question = document.getElementById('question').value;
+      const nickname = document.getElementById('nickname').value || '익명';
+
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden-submit';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = form.action;
+      tempForm.target = 'hidden-submit';
+
+      const addField = (name, value) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        tempForm.appendChild(input);
       };
 
-      try {
-        await fetch(form.action, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(data)
-        });
+      addField('question', question);
+      addField('nickname', nickname);
 
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+
+      setTimeout(() => {
         document.getElementById('form-view').style.display = 'none';
         document.getElementById('success-view').style.display = 'block';
-      } catch {
-        btn.disabled = false;
-        btn.textContent = '연결을 확인해주세요';
-      }
+        document.body.removeChild(iframe);
+        document.body.removeChild(tempForm);
+      }, 1500);
     });
   </script>
 </body>
