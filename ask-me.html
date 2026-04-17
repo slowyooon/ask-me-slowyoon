@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>after pause — ask me anything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sage-deep:    #6B8F6E;
+      --sage-mid:     #9AB598;
+      --sage-light:   #C7D9C4;
+      --beige-bg:     #FAF7F3;
+      --beige-mid:    #EDE4D8;
+      --beige-light:  #FDFBF8;
+      --beige-hint:   #EBF2EA;
+      --ink:          #32302C;
+      --ink-soft:     #5C5852;
+      --ink-muted:    #9C9590;
+      --white:        #FEFCF9;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Gowun Batang', 'Georgia', serif;
+      background-color: var(--beige-bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* subtle grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* decorative top circle */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -180px;
+      right: -120px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--beige-mid) 0%, transparent 70%);
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .header-eyebrow {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage-deep);
+      margin-bottom: 20px;
+    }
+
+    .header-mark {
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--sage-mid);
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    .header-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(24px, 5.6vw, 36px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 22px;
+    }
+
+    .header-title strong {
+      font-weight: 400;
+      font-style: normal;
+      color: var(--sage-deep);
+    }
+
+    .header-desc {
+      font-size: 14.5px;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      word-break: keep-all;
+    }
+
+    /* ── card ── */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 44px 40px 48px;
+      box-shadow:
+        0 2px 8px rgba(160, 140, 110, 0.07),
+        0 12px 40px rgba(160, 140, 110, 0.12),
+        inset 0 0 0 1px rgba(160, 140, 110, 0.10);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 24px 36px; }
+    }
+
+    .card-label {
+      font-size: 11.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage-deep);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .nickname-field {
+      width: 100%;
+      border: none;
+      border-bottom: 1.5px solid var(--sage-light);
+      background: transparent;
+      font-family: 'Gowun Batang', serif;
+      font-size: 15px;
+      color: var(--ink);
+      padding: 8px 2px 10px;
+      outline: none;
+      transition: border-color 0.25s;
+      margin-bottom: 36px;
+    }
+
+    .nickname-field::placeholder { color: var(--ink-muted); }
+    .nickname-field:focus { border-color: var(--sage-deep); }
+
+    .hint-block {
+      background: #EBF2EA;
+      border-left: 3px solid var(--sage-mid);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+
+    .hint-lead {
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+
+    .hint-list {
+      list-style: none;
+      margin-bottom: 12px;
+    }
+
+    .hint-list li {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .hint-list li::before {
+      content: '·';
+      position: absolute;
+      left: 2px;
+      color: var(--sage-deep);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .hint-tail {
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+
+    .question-area {
+      width: 100%;
+      border: 1.5px solid var(--beige-mid);
+      border-radius: 12px;
+      background: var(--beige-hint);
+      font-family: 'Gowun Batang', serif;
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 18px 20px;
+      resize: none;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+      min-height: 140px;
+    }
+
+    .question-area::placeholder { color: var(--ink-muted); }
+
+    .question-area:focus {
+      border-color: var(--sage-deep);
+      background: var(--white);
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin-top: 8px;
+      margin-bottom: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.05em;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--sage-deep);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Gowun Batang', serif;
+      font-size: 15px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s, transform 0.15s;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover { background: #5a7d5d; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { background: var(--sage-light); color: var(--ink-muted); cursor: not-allowed; transform: none; }
+
+    /* ── success ── */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 8px 0;
+      animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .success-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--sage-deep);
+      margin-bottom: 14px;
+    }
+
+    .success-desc {
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      line-height: 1.85;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--sage-deep);
+      text-decoration: none;
+      font-size: 13px;
+      font-family: 'Gowun Batang', serif;
+      letter-spacing: 0.03em;
+      padding: 6px 12px;
+      border: 1px solid var(--sage-light);
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .footer-link:hover {
+      background: var(--sage-light);
+      color: var(--ink);
+    }
+
+    .footer-dot {
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+
+    /* ── decorative bottom leaf ── */
+    .leaf {
+      position: fixed;
+      bottom: -60px;
+      left: -80px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--beige-mid) 0%, transparent 70%);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="leaf"></div>
+
+  <div class="wrapper">
+    <header class="header">
+      <p class="header-eyebrow">
+        <span class="header-mark"></span>
+        after pause
+        <span class="header-mark"></span>
+      </p>
+      <h1 class="header-title">
+        <em>ASK ME</em><br><strong>슬로윤의 모든것!</strong>
+      </h1>
+      <p class="header-desc">
+        애포즈를 시작하게 된 이야기, 회고를 하는 이유,<br>
+        프리랜서로 살아가는 현실, 저의 루틴은 어떤지 등등<br>
+        듣고 싶은 이야기가 있다면 편하게 질문해주세요. 뭐든 좋아요!
+      </p>
+    </header>
+
+    <div class="card">
+      <div id="form-view">
+        <!-- ⚠️ 설정 방법:
+             1. https://formspree.io 에서 무료 계정 생성
+             2. 새 폼 만들고 엔드포인트 URL 복사
+             3. 아래 action="" 에 붙여넣기
+             예: action="https://formspree.io/f/xyzabcde"
+        -->
+        <form id="ask-form" action="https://script.google.com/macros/s/AKfycbwRpMHMM1IfseSLmDaZzZP9X1NwXWuQPqqK-TvFljZil8BaDXSE_5Cc-ABt1Zi_q_Fi/exec" method="POST">
+          <label class="card-label" for="nickname">닉네임 (선택)</label>
+          <input
+            id="nickname"
+            class="nickname-field"
+            type="text"
+            name="nickname"
+            placeholder="익명으로 보내도 괜찮아요"
+            autocomplete="off"
+          />
+
+          <label class="card-label" for="question">하고 싶은 말 또는 질문</label>
+          <div class="hint-block">
+            <p class="hint-lead">요즘 SNS 콘텐츠 기획하면서, 여러분이 진짜 궁금해하는 것들을 담아보려고 해요.<br>
+            "나 사실 이런 건 좀 궁금했음…" 하는 거 있나요?</p>
+            <ul class="hint-list">
+              <li>어떻게 이 일 시작하게 됐는지</li>
+              <li>요즘 제 하루 루틴이 어떤지</li>
+              <li>일하면서 번아웃 올 때 어떻게 하는지</li>
+              <li>제 가치관, 연애관, 인간관계, 뭐든</li>
+            </ul>
+            <p class="hint-tail">평소에 궁금했던 게 있다면 편하게 남겨주세요 😃<br>뭐든 좋아요. 하나씩 콘텐츠로 풀어서 이야기해볼게요.</p>
+          </div>
+          <textarea
+            id="question"
+            class="question-area"
+            name="question"
+            placeholder="여기에 자유롭게 적어주세요."
+            maxlength="800"
+            required
+          ></textarea>
+          <p class="char-count"><span id="count">0</span> / 800</p>
+
+          <button type="submit" class="submit-btn" id="submit-btn">보내기</button>
+        </form>
+      </div>
+
+      <div class="success" id="success-view">
+        <span class="success-icon">🌿</span>
+        <p class="success-title">잘 받았어요.</p>
+        <p class="success-desc">
+          보내준 말, 꼭 읽을게요.<br>
+          언젠가 콘텐츠로 돌아올 거예요.
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p class="footer-label">인스타그램에서 만나요</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/after_pause" target="_blank" class="footer-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+          @after_pause
+        </a>
+        <span class="footer-dot">·</span>
+        <a href="https://instagram.com/slowyoon_" target="_blank" class="footer-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+          @slowyoon_
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('question');
+    const countEl  = document.getElementById('count');
+    const form     = document.getElementById('ask-form');
+    const btn      = document.getElementById('submit-btn');
+
+    textarea.addEventListener('input', () => {
+      countEl.textContent = textarea.value.length;    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = '전송 중…';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (res.ok) {
+          document.getElementById('form-view').style.display = 'none';
+          const success = document.getElementById('success-view');
+          success.style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = '다시 시도해주세요';
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = '연결을 확인해주세요';
+      }
+    });
+  </script>
+</body>
+</html>
